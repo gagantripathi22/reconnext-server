@@ -1,47 +1,28 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const db = require('./config/database');
+db.authenticate()
+  .then(() => {
+    console.log('Database Connceted !');
+  })
+  .catch((err) => {
+    console.log('Error: ' + err);
+  });
+
 const app = express();
-const { Posts } = require('./models/post')
-const port = 8080;
-const host = '127.0.0.1';
 
-var bodyParser = require('body-parser')
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cors('*'));
 
-app.use(bodyParser.json())
+app.use('/', require('./routes/post.route'));
+app.use('/', require('./routes/admin.route'));
 
-const Sequelize = require('sequelize-cockroachdb')
-
-const db = new Sequelize({
-  dialect: "postgres",
-  username: 'gagan',
-  password: 'Bcfbmhmq-WwboomNrFQuaQ',
-  host: 'reconnext-database-295.j77.cockroachlabs.cloud',
-  port: 26257,
-  database: 'posts',
-  logging: false,
-  dialectOptions: {
-    ssl: {
-      
-    },
-  }
-})
-
-app.get('/post', (req, res) => {
-  Posts.sync({
-    force: false,
+const PORT = process.env.PORT || 8080;
+db.sync()
+  .then(() => {
+    app.listen(PORT, console.log(`Server started on port ${PORT}`));
   })
-  .then(function() {
-    return {
-      hey: "jod"
-    };
-  })
-  .then(function(posts) {
-    res.send(posts)
-  })
-})
-
-
-app.listen(port, host, () => {
-  console.log(`server started at ${host} port ${port}`)
-})
-
-module.exports = db;
+  .catch((err) => console.log('Error: ' + err));

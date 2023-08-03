@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize-cockroachdb')
-const db = require('../index')
+const db = require('../config/database')
 
-const Posts = db.define("posts", {
+const Posts = db.define('posts', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
