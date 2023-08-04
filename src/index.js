@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const db = require('./config/database');
+
 db.authenticate()
   .then(() => {
-    console.log('Database Connceted !');
+    console.log('Database Connected !');
   })
   .catch((err) => {
     console.log('Error: ' + err);
