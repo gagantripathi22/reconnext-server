@@ -1,5 +1,7 @@
 const AdminModel = require('../models/admin.model.js');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const addAdmin = async (req, res) => {
   // Check if username already exists
@@ -29,16 +31,31 @@ const addAdmin = async (req, res) => {
 };
 
 const loginAdmin = async (req, res) => {
-  await AdminModel.findOne({
+  // Verify username
+  const findUsername = await AdminModel.findOne({
     where: { username: req.body.username },
-  })
-    .then((data) => {
-      console.log();
-      res.status(200).send(`Admin logged in : ${data.username}`);
-    })
-    .catch((err) => {
-      res.status(500).send(`Login Failed ${err.message}`);
-    });
+  });
+  if (findUsername) {
+    // Verify password
+    const comparePassword = bcrypt.compareSync(
+      req.body.password,
+      findUsername.password
+    );
+    if (comparePassword) {
+      // Generate token
+      jwt.sign(
+        { id: comparePassword.id, username: comparePassword.username },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: '1d' },
+        (err, token) => {
+          if (token) return res.json({ token: `Bearer ${token}` });
+          return res.status(500).send('token generation failed : ', err);
+        }
+      );
+    } else {
+      return res.status(500).send('invalid credentials');
+    }
+  } else return res.status(404).send('invalid credentials');
 };
 
 // Testing Purpose

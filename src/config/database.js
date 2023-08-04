@@ -1,17 +1,17 @@
 const { Sequelize } = require('sequelize-cockroachdb');
+require('dotenv').config();
+
 const db = new Sequelize({
-  dialect: "postgres",
-  username: 'gagan',
-  password: 'Bcfbmhmq-WwboomNrFQuaQ',
-  host: 'reconnext-database-295.j77.cockroachlabs.cloud',
-  port: 26257,
+  dialect: process.env.DB_DIALECT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   database: 'posts',
   logging: false,
   dialectOptions: {
-    ssl: {
-      
-    },
-  }
+    ssl: {},
+  },
 });
 
-module.exports = db; 
+module.exports = db;
