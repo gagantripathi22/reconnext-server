@@ -1,10 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controller/post.controller');
+const basicAuthentication = require('../middleware/basicAuth');
+const verifyToken = require('../middleware/verifyToken');
 
-router.post('/create', postController.createPost);
-router.get('/get/posts/:page', postController.getPosts);
-router.delete('/delete/post/:id', postController.deletePost);
-router.patch('/update/post/:id', postController.updatePost);
+router.post(
+  '/create',
+  basicAuthentication,
+  verifyToken.verifyToken,
+  postController.createPost
+);
+router.get('/get/posts/:page', basicAuthentication, postController.getPosts);
+router.delete(
+  '/delete/post/:id',
+  basicAuthentication,
+  verifyToken.verifyToken,
+  postController.deletePost
+);
+router.patch(
+  '/update/post/:id',
+  basicAuthentication,
+  verifyToken.verifyToken,
+  postController.updatePost
+);
 
 module.exports = router;
