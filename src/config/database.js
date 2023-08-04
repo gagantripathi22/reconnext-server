@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize-cockroachdb');
 require('dotenv').config();
 
 const db = new Sequelize({
-  dialect: process.env.DB_DIALECT,
+  dialect: 'postgres',
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
