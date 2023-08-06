@@ -58,6 +58,10 @@ const loginAdmin = async (req, res) => {
   } else return res.status(404).send('invalid credentials');
 };
 
+const verifyClientSideToken = async (req, res) => {
+  res.status(200).send('authorized access');
+};
+
 // Testing Purpose
 const getAllAdmins = async (req, res) => {
   await AdminModel.findAll()
@@ -75,4 +79,5 @@ module.exports = {
   loginAdmin,
   getAllAdmins,
   removeAdmin,
+  verifyClientSideToken,
 };
