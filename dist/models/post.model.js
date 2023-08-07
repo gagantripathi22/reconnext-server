@@ -10,7 +10,7 @@ const Posts = db.define('posts', {
     type: Sequelize.STRING
   },
   body: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   status: {
     type: Sequelize.STRING
@@ -18,5 +18,8 @@ const Posts = db.define('posts', {
   url: {
     type: Sequelize.STRING
   }
+});
+db.sync({
+  force: true
 });
 module.exports = Posts;

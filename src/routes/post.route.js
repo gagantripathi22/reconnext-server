@@ -11,6 +11,11 @@ router.post(
   postController.createPost
 );
 router.get('/get/posts/:page', basicAuthentication, postController.getPosts);
+router.get(
+  '/get/post/:url',
+  basicAuthentication,
+  postController.getPostUsingUrl
+);
 router.delete(
   '/delete/post/:id',
   basicAuthentication,

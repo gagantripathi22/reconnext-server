@@ -1,10 +1,14 @@
 const PostModel = require('../models/post.model.js');
 
+const generateUrlFromTitle = (title) => {
+  return title.replaceAll(' ', '-').toLowerCase();
+};
+
 const createPost = async (req, res) => {
   var newPost = new PostModel({
     title: req.body.title,
     body: req.body.body,
-    url: req.body.title,
+    url: generateUrlFromTitle(req.body.title),
   })
     .save()
     .then((data) => {
@@ -44,9 +48,18 @@ const updatePost = async (req, res) => {
     .catch((err) => res.status(500).send(err.message));
 };
 
+const getPostUsingUrl = async (req, res) => {
+  const url = req.params.url;
+  console.log(url);
+  await PostModel.findOne({ where: { url: url } })
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.status(500).send(err.message));
+};
+
 module.exports = {
   createPost,
   getPosts,
   deletePost,
   updatePost,
+  getPostUsingUrl,
 };
