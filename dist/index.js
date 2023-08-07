@@ -16,8 +16,7 @@ app.use(bodyParser.urlencoded({
   limit: '50mb'
 }));
 app.use(express.json());
-// app.use(cors());
-
+app.use(cors());
 app.use('/', require('./routes/post.route'));
 app.use('/', require('./routes/admin.route'));
 const PORT = 8080;
