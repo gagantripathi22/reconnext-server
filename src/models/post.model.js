@@ -21,6 +21,4 @@ const Posts = db.define('posts', {
   },
 });
 
-db.sync({ force: true });
-
 module.exports = Posts;
