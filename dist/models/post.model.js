@@ -19,7 +19,4 @@ const Posts = db.define('posts', {
     type: Sequelize.STRING
   }
 });
-db.sync({
-  force: true
-});
 module.exports = Posts;

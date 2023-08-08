@@ -3,7 +3,7 @@ const generateUrlFromTitle = title => {
   return title.replaceAll(' ', '-').toLowerCase();
 };
 const createPost = async (req, res) => {
-  var newPost = new PostModel({
+  await PostModel({
     title: req.body.title,
     body: req.body.body,
     url: generateUrlFromTitle(req.body.title)
