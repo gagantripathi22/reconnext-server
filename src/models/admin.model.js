@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize-cockroachdb');
+const { Sequelize } = require('sequelize-cockroachdb');
 const db = require('../config/database');
 
 const Admins = db.define('admins', {

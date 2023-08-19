@@ -5,7 +5,7 @@ const generateUrlFromTitle = (title) => {
 };
 
 const createPost = async (req, res) => {
-  await PostModel({
+  await new PostModel({
     title: req.body.title,
     body: req.body.body,
     url: generateUrlFromTitle(req.body.title),

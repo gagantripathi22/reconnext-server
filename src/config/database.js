@@ -1,8 +1,10 @@
 const { Sequelize } = require('sequelize-cockroachdb');
 require('dotenv').config();
+// const AdminModel = require('../models/admin.model.js');
+// const PostModel = require('../models/post.model.js');
 
 const db = new Sequelize({
-  dialect: 'postgres',
+  dialect: 'postgres' || 'mysql',
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
@@ -13,5 +15,7 @@ const db = new Sequelize({
     ssl: {},
   },
 });
+
+db.sync({});
 
 module.exports = db;
