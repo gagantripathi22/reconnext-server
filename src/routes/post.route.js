@@ -29,4 +29,6 @@ router.patch(
   postController.updatePost
 );
 
+router.get('/search', basicAuthentication, postController.search);
+
 module.exports = router;

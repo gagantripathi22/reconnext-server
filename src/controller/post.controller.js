@@ -1,4 +1,5 @@
 const PostModel = require('../models/post.model.js');
+const { Op } = require('sequelize');
 
 const generateUrlFromTitle = (title) => {
   return title.replaceAll(' ', '-').toLowerCase();
@@ -56,10 +57,29 @@ const getPostUsingUrl = async (req, res) => {
     .catch((err) => res.status(500).send(err.message));
 };
 
+const search = async (req, res) => {
+  let lookupValue = req.body.searchTerm.toLowerCase();
+  await PostModel.findAll({
+    where: {
+      [Op.or]: [
+        {
+          title: { [Op.iLike]: `%${lookupValue}%` },
+        },
+        {
+          body: { [Op.iLike]: `%${lookupValue}%` },
+        },
+      ],
+    },
+  })
+    .then((data) => res.status(200).send(data))
+    .catch((err) => res.status(500).send(err.message));
+};
+
 module.exports = {
   createPost,
   getPosts,
   deletePost,
   updatePost,
   getPostUsingUrl,
+  search,
 };
