@@ -9,7 +9,7 @@ const createPost = async (req, res) => {
   await new PostModel({
     title: req.body.title,
     body: req.body.body,
-    url: 'test-url',
+    url: generateUrlFromTitle(req.body.title),
   })
     .save()
     .then((data) => {
@@ -75,6 +75,21 @@ const search = async (req, res) => {
     .catch((err) => res.status(500).send(err.message));
 };
 
+const createNewPost = async (req, res) => {
+  new PostModel({
+    title: req.body.title,
+    body: req.body.body,
+    url: generateUrlFromTitle(req.body.title),
+  })
+    .save()
+    .then((data) => {
+      res.status(200).send(`New Post : ${data}`);
+    })
+    .catch((err) => {
+      res.status(500).send(err.message);
+    });
+};
+
 module.exports = {
   createPost,
   getPosts,
@@ -82,4 +97,5 @@ module.exports = {
   updatePost,
   getPostUsingUrl,
   search,
+  createNewPost,
 };

@@ -28,6 +28,12 @@ router.patch(
   verifyToken.verifyToken,
   postController.updatePost
 );
+router.post(
+  '/create/post',
+  basicAuthentication,
+  verifyToken.verifyToken,
+  postController.createNewPost
+);
 
 router.get('/search', basicAuthentication, postController.search);
 
