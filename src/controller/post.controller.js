@@ -9,7 +9,7 @@ const createPost = async (req, res) => {
   await new PostModel({
     title: req.body.title,
     body: req.body.body,
-    url: generateUrlFromTitle(req.body.title),
+    url: 'test-url',
   })
     .save()
     .then((data) => {
