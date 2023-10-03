@@ -37,4 +37,6 @@ router.post(
 
 router.get('/search', basicAuthentication, postController.search);
 
+router.get('/searchnew', basicAuthentication, postController.searchNew);
+
 module.exports = router;

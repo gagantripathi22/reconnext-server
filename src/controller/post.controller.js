@@ -72,7 +72,27 @@ const search = async (req, res) => {
     },
   })
     .then((data) => res.status(200).send(data))
-    .catch((err) => res.status(500).send(err.message));
+    .catch((err) => res.status(500).send(err.messßage));
+};
+
+const searchNew = async (req, res) => {
+  const { query } = req.query;
+
+  try {
+    const results = await PostModel.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.iLike]: `%${query}%` } },
+          { body: { [Op.iLike]: `%${query}%` } },
+        ],
+      },
+    });
+
+    res.status(200).send(results);
+  } catch (error) {
+    console.error('Error searching for blogs:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 const createNewPost = async (req, res) => {
@@ -97,5 +117,6 @@ module.exports = {
   updatePost,
   getPostUsingUrl,
   search,
+  searchNew,
   createNewPost,
 };
