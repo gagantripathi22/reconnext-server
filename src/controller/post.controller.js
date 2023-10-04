@@ -76,23 +76,24 @@ const search = async (req, res) => {
 };
 
 const searchNew = async (req, res) => {
-  const { query } = req.query;
+  // const { query } = req.query;
 
-  try {
-    const results = await PostModel.findAll({
-      where: {
-        [Op.or]: [
-          { title: { [Op.iLike]: `%${query}%` } },
-          { body: { [Op.iLike]: `%${query}%` } },
-        ],
-      },
-    });
+  // try {
+  //   const results = await PostModel.findAll({
+  //     where: {
+  //       [Op.or]: [
+  //         { title: { [Op.iLike]: `%${query}%` } },
+  //         { body: { [Op.iLike]: `%${query}%` } },
+  //       ],
+  //     },
+  //   });
 
-    res.status(200).send(results);
-  } catch (error) {
-    console.error('Error searching for blogs:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  //   res.status(200).send(results);
+  // } catch (error) {
+  //   console.error('Error searching for blogs:', error);
+  //   res.status(500).json({ error: 'Internal server error' });
+  // }
+  res.status(200).send('new search test');
 };
 
 const createNewPost = async (req, res) => {
